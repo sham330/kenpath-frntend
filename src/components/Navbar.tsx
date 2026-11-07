@@ -6,13 +6,11 @@ import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
   DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { LogOut, Settings, User, Menu } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { LogOut, Menu } from 'lucide-react'
 import { RootState, AppDispatch } from '../store'
 
 export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
   const dispatch = useDispatch<AppDispatch>()
-  const navigate = useNavigate()
   const user = useSelector((s: RootState) => s.auth.user)
   const initials = (user?.name || user?.email || 'U').slice(0, 2).toUpperCase()
 
@@ -47,13 +45,6 @@ export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
               <p className="text-xs text-muted-foreground">{user?.email}</p>
             </div>
           </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate('/dashboard/settings')}>
-            <User className="mr-2 h-4 w-4" /> Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate('/dashboard/settings')}>
-            <Settings className="mr-2 h-4 w-4" /> Settings
-          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => dispatch(logout())}>
             <LogOut className="mr-2 h-4 w-4" /> Log out
