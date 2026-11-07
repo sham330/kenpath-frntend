@@ -147,6 +147,50 @@ Tests cover:
 - `readingsSlice` — fetch, create, update, delete thunks
 - `reportsSlice` — fetch report, empty state, clearReport
 
+## Future Improvements
+
+### Role-Based Access Control
+Introduce three roles — **Patient**, **Nurse**, and **Doctor** — each with a different view of the app.
+
+- **Patient** — can only log their own readings, view their own reports, and write personal notes
+- **Nurse** — can view and manage readings for assigned patients, add observations
+- **Doctor** — full read access across all assigned patients, can review trends and leave clinical notes
+
+On the frontend this means:
+- Store `role` in the auth state alongside `token` and `user`
+- Create a `RoleGuard` component (similar to `ProtectedRoute`) that restricts pages by role
+- Show different sidebar links and actions depending on the role
+
+### Patient Monitoring Dashboard (Doctor / Nurse view)
+A dedicated page where a doctor or nurse can:
+- Search and select a patient
+- See their glucose trend over time as a line chart
+- Compare readings across multiple patients side by side
+- Get alerts when a patient's readings are consistently out of range
+
+### Food & Meal Logging
+Extend each reading entry to optionally include what the patient ate:
+- Meal description (free text)
+- Carbohydrate estimate (grams)
+- This helps correlate food intake with glucose spikes, especially useful for the `AFTER_BREAKFAST`, `AFTER_LUNCH`, `AFTER_DINNER` slots
+
+### Medication Tracking
+A separate log for medications taken each day:
+- Medicine name, dosage, and time taken
+- Link medication entries to the same date as readings so doctors can see the full picture
+- Alerts if a patient hasn't logged their medication for the day
+
+### Patient Notes / Journal
+Allow patients to attach a short note to any reading describing how they feel:
+- Energy level, symptoms (headache, dizziness, fatigue), stress level
+- Doctors and nurses can read these notes when reviewing a patient's history
+- Helps explain unusual readings that numbers alone can't capture
+
+### Notifications & Alerts
+- Notify patients when a reading is outside their target range
+- Remind patients to log readings at each time slot
+- Alert the assigned nurse or doctor if a critical reading is logged (e.g. below 60 or above 400 mg/dL)
+
 ## Scripts
 
 ```bash
