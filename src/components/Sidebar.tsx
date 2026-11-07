@@ -1,7 +1,12 @@
 import { NavLink } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
-import { Activity } from 'lucide-react'
+import { Activity, BarChart3 } from 'lucide-react'
+
+const links = [
+  { to: '/dashboard/readings', label: 'Readings', icon: Activity },
+  { to: '/dashboard/reports', label: 'Reports', icon: BarChart3 },
+]
 
 export default function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
   return (
@@ -15,19 +20,22 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
       )}>
         <nav className="flex-1 p-3 space-y-0.5">
           <p className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Menu</p>
-          <NavLink
-            to="/dashboard/readings"
-            onClick={onClose}
-            className={({ isActive }) => cn(
-              'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors',
-              isActive
-                ? 'bg-sidebar-primary text-sidebar-primary-foreground'
-                : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
-            )}
-          >
-            <Activity className="h-4 w-4 shrink-0" />
-            Readings
-          </NavLink>
+          {links.map(({ to, label, icon: Icon }) => (
+            <NavLink
+              key={to}
+              to={to}
+              onClick={onClose}
+              className={({ isActive }) => cn(
+                'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors',
+                isActive
+                  ? 'bg-sidebar-primary text-sidebar-primary-foreground'
+                  : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+              )}
+            >
+              <Icon className="h-4 w-4 shrink-0" />
+              {label}
+            </NavLink>
+          ))}
         </nav>
         <Separator />
         <div className="p-3">

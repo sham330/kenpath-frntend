@@ -1,11 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Dashboard from './pages/Dashboard'
-import Analytics from './pages/Analytics'
-import Users from './pages/Users'
-import Settings from './pages/Settings'
 import Readings from './pages/Readings'
+import Reports from './pages/Reports'
 import DashboardLayout from './components/DashboardLayout'
 import ProtectedRoute from './components/ProtectedRoute'
 
@@ -23,11 +20,9 @@ export default function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Dashboard />} />
-          <Route path="analytics" element={<Analytics />} />
-          <Route path="users" element={<Users />} />
-          <Route path="settings" element={<Settings />} />
+          <Route index element={<Navigate to="readings" replace />} />
           <Route path="readings" element={<Readings />} />
+          <Route path="reports" element={<Reports />} />
         </Route>
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
